@@ -1,42 +1,71 @@
 <template>
-  <div>
-    <p>Home page</p>
-    <p>Random number from backend: {{ randomNumber }}</p>
-    <button @click="getRandom">New random number</button>
-  </div>
+  <el-table
+    :data="tableData"
+    style="width: 100%">
+    <el-table-column
+      type="index"
+      :index="indexMethod">
+    </el-table-column>
+    <el-table-column
+      prop="date"
+      label="日期"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="姓名"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="地址">
+    </el-table-column>
+  </el-table>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data () {
     return {
-      randomNumber: 0
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1518 弄',
+        zip: 200333,
+        tag: '家'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1517 弄',
+        zip: 200333,
+        tag: '公司'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1519 弄',
+        zip: 200333,
+        tag: '家'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        province: '上海',
+        city: '普陀区',
+        address: '上海市普陀区金沙江路 1516 弄',
+        zip: 200333,
+        tag: '公司'
+      }]
     }
   },
   methods: {
-    getRandomInt (min, max) {
-      min = Math.ceil(min)
-      max = Math.floor(max)
-      return Math.floor(Math.random() * (max - min + 1)) + min
-    },
-    getRandom () {
-      // this.randomNumber = this.getRandomInt(1, 100)
-      this.randomNumber = this.getRandomFromBackend()
-    },
-    getRandomFromBackend () {
-      const path = `http://localhost:5000/api/random`
-      axios.get(path)
-        .then(response => {
-          this.randomNumber = response.data.randomNumber
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    indexMethod (index) {
+      return index * 2
     }
-  },
-  created () {
-    this.getRandom()
   }
 }
 </script>
